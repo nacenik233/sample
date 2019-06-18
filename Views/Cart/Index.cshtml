@@ -1,0 +1,73 @@
+@using STest.Models
+@model STest.Models.CartView
+
+@{
+    ViewBag.Title = "Cart";
+}
+<h1 class="headline">@ViewBag.Title</h1>
+
+<table class="table" id="tableBox" runat="server">
+    <tr>
+        <th>
+            Count
+        </th>
+        <th>
+            Product
+        </th>
+        <th>
+            Price
+        </th>
+        <th>All Price</th>
+    </tr>
+    
+    @foreach (var item in Model.Cart.Lines)
+    {
+        <tr>
+            <th>
+                @item.Quantity
+            </th>
+            <th>
+                @item.Item.Product
+            </th>
+            <th>
+                @item.Item.Price
+            </th>
+            <th>
+                @(item.Quantity * item.Item.Price)
+            </th>
+            <th>
+                @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                {
+                    @Html.Hidden("index",item.Item.Index)
+                    @Html.HiddenFor(i => i.ReturnUrl)
+                    <input type="submit"value="Delete" class="btn-primary"/>
+                }
+            </th>
+        </tr>
+    }
+</table> 
+    <div align="right">
+        @using (Html.BeginForm("RemoveFromCartAll", "Cart"))
+        {
+            @Html.HiddenFor(i => i.ReturnUrl)
+            <input type="submit"value="Delete All" class="btn-primary"/>
+        }
+    </div>
+
+ <table class="table" runat="server">   
+    <tr align="right">
+        <th>
+            Price for everithing
+        </th>
+        <th>
+            @Model.Cart.PriceByShop() 
+        </th>
+    </tr>
+ </table>
+
+<div class="bottomRateBack">
+    @using (Html.BeginForm("BackToShop", "Cart"))
+    {
+        <input type="submit"value="Back to shop" class="btn-danger"/>
+    }
+</div>

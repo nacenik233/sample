@@ -1,0 +1,35 @@
+@model STest.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h1 class="headLine">@ViewBag.title</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="loginBlock">
+        <hr />
+        @Html.ValidationSummary(true,"",new {@class = "text-danger labelStyle"})
+        <div class = "form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "labelStyle col-md-2", @style = " font-size: 17px; color: rgb(238, 111, 45)"})
+            <div>
+                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Name,"",new {@class = "text-dssanger"})
+            </div>
+        </div>
+        
+        <div class="text-info">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new {@class = " labelStyle col-md-2" , @style = " font-size: 17px; color: rgb(238, 111, 45)"})
+            <div class="show">
+                @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control", @type = "password"}})
+                @Html.ValidationMessageFor(model => model.Password,"",new {@class = "text-hide"})
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" value="sign in" class="btn-primary" style = "margin-top: 15px"/>
+        </div>
+    </div>
+}

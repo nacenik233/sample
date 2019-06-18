@@ -1,0 +1,50 @@
+@model IEnumerable<STest.Models.Shop>
+
+<div class="userPanel">
+    <div class="exitBlock">
+        <span>Welcome, @User.Identity.Name</span>
+        @using (Html.BeginForm("Exit", "Shop"))
+        {
+            <input type="submit"value="Exit" class="btn-danger"/>
+        }
+    </div>
+</div>
+
+<hr>
+
+<h1 align="center" class="headline">SHOP of the best products</h1>
+
+<div class="main" runat="server">
+    @foreach (var item in Model)
+    {
+        <div class="mainAround">
+            <div class="main_goods">
+                <div class="main_goods_itemBox">
+                    <img class="imageBox" src="src/img/@Html.DisplayFor(modelItem => item.Img)" alt="">
+                    <p class="main_goods_itemBox_product">
+                        @Html.DisplayFor(modelItem => item.Product)
+                    </p>
+                    <p class="main_goods_itemBox_description">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+                </div>
+                <hr>
+                <div class="main_goods_priceBox">
+                    <span>
+                        @Html.DisplayFor(modelItem => item.Price) $
+                    </span>
+                    @using (Html.BeginForm("AddToCart", "Cart"))
+                    {
+                        <div>
+                            @Html.Hidden("index",item.Index)
+                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                            <input type="submit" value="Add To Cart" class="btn-primary"/>
+                        </div>	
+                                    
+                    }
+                </div>
+            </div>
+         </div>   
+    }
+        
+</div>
